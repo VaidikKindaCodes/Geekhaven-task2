@@ -203,7 +203,7 @@ export function Header() {
                     </div>
 
                     <Link
-                      href="/signin"
+                      href="/auth/sign-in"
                       onClick={() => setIsProfileOpen(false)}
                       className="flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >

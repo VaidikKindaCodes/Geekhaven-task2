@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { DBConnect } from "../dbConnect.js";
 import { Product, TotalProducts } from "../models/product.js"; 
-import User from "../models/User.js";
+import User from "../models/user.js";
 
 dotenv.config();
 

@@ -20,7 +20,8 @@ export default function SignUpSection({ refProp }: { refProp?: React.RefObject<H
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    try {
+    try 
+    {
       const res = await fetch(`${backendurl}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

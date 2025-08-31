@@ -3,18 +3,56 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { User, Heart, ShoppingBag, Settings, Clock, TrendingUp, Star } from 'lucide-react';
+import { User, Heart, ShoppingBag,  Clock, TrendingUp, Star } from 'lucide-react';
 import { useApp, useLikes } from '@/context/AppContext';
 import { products } from '@/data/mockData';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import { ProductCard } from '@/components/ui/ProductCard';
+import { AuthContextType, useAuth } from '@/context/AuthProvider';
+
+interface Product {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    originalPrice: number;
+    images: string[];
+    category: string;
+    condition: string;
+    sellerId: number;
+    sellerName: string;
+    sellerRating: number;
+    location: string;
+    specifications: Record<string, string>;
+    priceHistory: number[];
+    likes: number;
+    isLiked: boolean;
+    datePosted: string;
+  }
 
 export default function DashboardPage() {
+  const {user} = useAuth() as AuthContextType;
+  const backendurl = process.env.NEXT_PUBLIC_BACKEND_URL?.toString();
   const searchParams = useSearchParams();
+  const [likedData , setLikedData] = useState<Product[]>([]);
+  const [cartData , setCartData] = useState([]);
   const activeTab = searchParams.get('tab') || 'overview';
   const { userActions, dispatch } = useApp();
   const { likedProducts } = useLikes();
 
+  const fetchLikedData = async () => {
+    const res = await fetch(
+      `${backendurl}/api/getliked?userId=${user?._id}`
+    );
+    const data = await res.json();
+    setLikedData(data);
+  };
+
+  
+
+  useEffect(()=>{
+    fetchLikedData();
+  } , [])
   useEffect(() => {
     dispatch({
       type: 'ADD_USER_ACTION',
@@ -27,15 +65,13 @@ export default function DashboardPage() {
     });
   }, [activeTab, dispatch]);
 
-  const likedProductsData = products.filter(product => likedProducts.includes(product.id));
-
   const tabs = [
     { id: 'overview', label: 'Overview', icon: TrendingUp },
     { id: 'likes', label: 'Liked Products', icon: Heart },
     { id: 'orders', label: 'Orders', icon: ShoppingBag },
-    { id: 'activity', label: 'Activity', icon: Clock },
-    { id: 'settings', label: 'Settings', icon: Settings },
+    { id: 'activity', label: 'Activity', icon: Clock }
   ];
+  
 
   const mockOrders = [
     {
@@ -59,11 +95,10 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Manage your ResellHub account and activity
+            Manage your VaidikShop account and activity
           </p>
         </div>
 
@@ -75,8 +110,7 @@ export default function DashboardPage() {
                   <User className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">Demo User</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">demo@resellhub.com</p>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{user?.username}</h3>
                 </div>
               </div>
               <nav className="space-y-2">
@@ -184,7 +218,7 @@ export default function DashboardPage() {
                     Liked Products ({likedProducts.length})
                   </h2>
 
-                  {likedProductsData.length === 0 ? (
+                  {likedData.length === 0 ? (
                     <div className="text-center py-12">
                       <Heart className="h-16 w-16 mx-auto text-gray-400 mb-4" />
                       <p className="text-xl text-gray-500 dark:text-gray-400 mb-4">
@@ -202,7 +236,7 @@ export default function DashboardPage() {
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {likedProductsData.map(product => (
+                      {likedData.map(product => (
                         <ProductCard key={product.id} product={product} />
                       ))}
                     </div>
@@ -292,89 +326,6 @@ export default function DashboardPage() {
                         </div>
                       </div>
                     ))}
-                  </div>
-                </div>
-              )}
-              {activeTab === 'settings' && (
-                <div className="p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
-                    Account Settings
-                  </h2>
-
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-                        Profile Information
-                      </h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            First Name
-                          </label>
-                          <input
-                            type="text"
-                            defaultValue="Demo"
-                            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            Last Name
-                          </label>
-                          <input
-                            type="text"
-                            defaultValue="User"
-                            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Email Address
-                      </label>
-                      <input
-                        type="email"
-                        defaultValue="demo@resellhub.com"
-                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                      />
-                    </div>
-
-                    <div>
-                      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-                        Preferences
-                      </h3>
-                      <div className="space-y-3">
-                        <label className="flex items-center">
-                          <input type="checkbox" className="rounded border-gray-300 dark:border-gray-600" />
-                          <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                            Email notifications for new messages
-                          </span>
-                        </label>
-                        <label className="flex items-center">
-                          <input type="checkbox" className="rounded border-gray-300 dark:border-gray-600" />
-                          <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                            SMS notifications for important updates
-                          </span>
-                        </label>
-                        <label className="flex items-center">
-                          <input type="checkbox" className="rounded border-gray-300 dark:border-gray-600" defaultChecked />
-                          <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                            Marketing emails and promotions
-                          </span>
-                        </label>
-                      </div>
-                    </div>
-
-                    <div className="flex space-x-4 pt-4">
-                      <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium transition-colors">
-                        Save Changes
-                      </button>
-                      <button className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 px-6 py-2 rounded-md font-medium transition-colors">
-                        Cancel
-                      </button>
-                    </div>
                   </div>
                 </div>
               )}

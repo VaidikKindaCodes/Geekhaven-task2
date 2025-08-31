@@ -1,6 +1,6 @@
 import express from "express";
-import User from "../models/User.js";
-import { Product, TotalProducts } from "../models/Product.js";
+import User from "../models/user.js";
+import { Product, TotalProducts } from "../models/items.js";
 
 const router = express.Router();
 
@@ -122,4 +122,23 @@ router.post("/liked/remove", async (req, res) => {
     }
 });
 
+router.get("/getliked" , async (req,res) => {
+    try {
+    const { userId } = req.query;
+    const user = await User.findById(userId).populate("Product");
+    const LikedItems = user.LikedItems;
+    return res.json(LikedItems);
+  } catch (error) {}
+    
+})
+
+router.get("/getcart" , async (req,res) => {
+    try {
+    const { userId } = req.query;
+    const user = await User.findById(userId).populate("Product");
+    const Cart = user.Cart;
+    return res.json(Cart);
+  } catch (error) {}
+    
+})
 export default router;

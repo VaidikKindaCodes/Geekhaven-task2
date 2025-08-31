@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-import { setUser } from "../services/auth";
+import { setUser } from "../services/auth.js";
 import { createHmac, randomBytes } from "node:crypto";
 
 const userSchema = new Schema(
