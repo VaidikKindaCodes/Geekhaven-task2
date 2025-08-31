@@ -68,10 +68,8 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-              {/* Profile Section */}
               <div className="flex items-center space-x-3 mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
                 <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
                   <User className="h-6 w-6 text-white" />
@@ -81,8 +79,6 @@ export default function DashboardPage() {
                   <p className="text-sm text-gray-500 dark:text-gray-400">demo@resellhub.com</p>
                 </div>
               </div>
-
-              {/* Navigation */}
               <nav className="space-y-2">
                 {tabs.map(tab => (
                   <Link
@@ -106,18 +102,13 @@ export default function DashboardPage() {
               </nav>
             </div>
           </div>
-
-          {/* Main Content */}
           <div className="lg:col-span-3">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md">
-              {/* Overview Tab */}
               {activeTab === 'overview' && (
                 <div className="p-6">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
                     Account Overview
                   </h2>
-
-                  {/* Stats Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                       <div className="flex items-center space-x-3">
@@ -161,8 +152,6 @@ export default function DashboardPage() {
                       </div>
                     </div>
                   </div>
-
-                  {/* Recent Activity */}
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                       Recent Activity
@@ -189,8 +178,6 @@ export default function DashboardPage() {
                   </div>
                 </div>
               )}
-
-              {/* Liked Products Tab */}
               {activeTab === 'likes' && (
                 <div className="p-6">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
@@ -222,8 +209,6 @@ export default function DashboardPage() {
                   )}
                 </div>
               )}
-
-              {/* Orders Tab */}
               {activeTab === 'orders' && (
                 <div className="p-6">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
@@ -282,8 +267,6 @@ export default function DashboardPage() {
                   </div>
                 </div>
               )}
-
-              {/* Activity Tab */}
               {activeTab === 'activity' && (
                 <div className="p-6">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
@@ -312,8 +295,6 @@ export default function DashboardPage() {
                   </div>
                 </div>
               )}
-
-              {/* Settings Tab */}
               {activeTab === 'settings' && (
                 <div className="p-6">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
