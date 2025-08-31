@@ -75,7 +75,6 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
-    // Show success message (in a real app, you'd use a toast system)
     alert(`Added ${quantity}x ${product.title} to cart!`);
   };
 
