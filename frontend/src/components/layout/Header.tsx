@@ -17,9 +17,12 @@ import {
   Bell
 } from 'lucide-react';
 import { useApp, useCart, useLikes } from '../../context/AppContext';
+import ThemeToggle from '../ui/Darkmode';
+import { AuthContextType, useAuth } from '@/context/AuthProvider';
 
 
 export function Header() {
+  const {token , user ,logout} = useAuth() as AuthContextType;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -75,7 +78,6 @@ export function Header() {
   const navLinks = [
     { name: 'Home', href: '/', active: pathname === '/' },
     { name: 'Products', href: '/products', active: pathname === '/products' },
-    { name: 'Categories', href: '/products?categories=all', active: false },
     { name: 'Sellers', href: '/sellers', active: pathname.startsWith('/sellers') },
   ];
 
@@ -120,19 +122,6 @@ export function Header() {
             </form>
           </div>
           <div className="flex items-center space-x-4">
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-              aria-label="Toggle dark mode"
-            >
-              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </button>
-            <button className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors relative">
-              <Bell className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">
-                3
-              </span>
-            </button>
             <Link
               href="/dashboard?tab=likes"
               className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors relative"
@@ -164,35 +153,66 @@ export function Header() {
                 <span className="hidden sm:block text-sm font-medium">Account</span>
               </button>
 
-              {isProfileOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2">
-                  <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">Demo User</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">demo@resellhub.com</p>
-                  </div>
+{isProfileOpen && (
+              <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+                {token ? (
+                  <>
+                    <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">
+                        {user?.username || "Demo User"}
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {user?.email || "demo@resellhub.com"}
+                      </p>
+                    </div>
 
-                  <Link
-                    href="/dashboard"
-                    className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <User className="h-4 w-4 mr-2" />
-                    Dashboard
-                  </Link>
+                    <Link
+                      href="/dashboard"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <User className="h-4 w-4 mr-2" /> Dashboard
+                    </Link>
 
-                  <Link
-                    href="/dashboard?tab=settings"
-                    className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <Settings className="h-4 w-4 mr-2" />
-                    Settings
-                  </Link>
+                    <Link
+                      href="/dashboard?tab=settings"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <Settings className="h-4 w-4 mr-2" /> Settings
+                    </Link>
 
-                  <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Sign Out
-                  </button>
-                </div>
-              )}
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsProfileOpen(false);
+                        router.push("/");
+                      }}
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" /> Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">
+                        Guest User
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Please sign in to continue
+                      </p>
+                    </div>
+
+                    <Link
+                      href="/signin"
+                      onClick={() => setIsProfileOpen(false)}
+                      className="flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <User className="h-4 w-4 mr-2" /> Sign In
+                    </Link>
+                  </>
+                )}
+              </div>
+            )}
             </div>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}

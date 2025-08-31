@@ -1,15 +1,11 @@
 import { NextRequest , NextResponse } from "next/server";
 
 export const config = {
-    matcher: ['/dashboard/:path*' , '/auth/sign-in' , '/auth/sign-up' , '/' , "/sellers/:path*" , "/cart" , "/logs"]
+    matcher: ['/dashboard/:path*' , '/auth/sign-in' , '/auth/sign-up'  , "/sellers/:path*" , "/cart" , "/logs" , "/products/:path*"]
 }
 
-function getCookie(name: string): string | null {
-  const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
-  return match ? decodeURIComponent(match[2]) : null;
-}
 export async function middleware(request: NextRequest) {
-    const token = getCookie("token");
+    const token = request.cookies.get("token")?.value || null;
     const url = request.nextUrl;
     if(token && (url.pathname.startsWith("/auth/sign-in") ||url.pathname.startsWith("/auth/sign-up") ||url.pathname === '/')){
         return NextResponse.redirect(new URL('/dashboard', request.url));

@@ -83,174 +83,174 @@ export default function HomePage() {
   });
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-20">
-        <div className="absolute inset-0 bg-gradient-primary opacity-10"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-20 transition-colors duration-300">
+      <div className="absolute inset-0 bg-gradient-primary opacity-10 dark:opacity-20"></div>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+          Welcome to{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-primary dark:bg-gradient-to-br dark:from-blue-400 dark:to-indigo-600">
+          ResellHub
+          </span>
+        </h1>
+        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+          Discover amazing deals on pre-owned items. Buy and sell with confidence in our trusted marketplace.
+        </p>
+
+        {/* Search Bar */}
+        <div className="max-w-2xl mx-auto mb-8">
+          <SearchBar 
+          onSearch={handleSearch}
+          placeholder="Search for products, categories..."
+          />
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              Welcome to{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-primary">
-                ResellHub
-              </span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-              Discover amazing deals on pre-owned items. Buy and sell with confidence in our trusted marketplace.
-            </p>
-
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto mb-8">
-              <SearchBar 
-                onSearch={handleSearch}
-                placeholder="Search for products, categories..."
-              />
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-gray-900 dark:text-white">1,000+</div>
-                <div className="text-gray-600 dark:text-gray-300">Products Listed</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-gray-900 dark:text-white">500+</div>
-                <div className="text-gray-600 dark:text-gray-300">Happy Sellers</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-gray-900 dark:text-white">2,000+</div>
-                <div className="text-gray-600 dark:text-gray-300">Satisfied Buyers</div>
-              </div>
-            </div>
+          <div className="text-3xl font-bold text-gray-900 dark:text-white">1,000+</div>
+          <div className="text-gray-600 dark:text-gray-300">Products Listed</div>
+          </div>
+          <div className="text-center">
+          <div className="text-3xl font-bold text-gray-900 dark:text-white">500+</div>
+          <div className="text-gray-600 dark:text-gray-300">Happy Sellers</div>
+          </div>
+          <div className="text-center">
+          <div className="text-3xl font-bold text-gray-900 dark:text-white">2,000+</div>
+          <div className="text-gray-600 dark:text-gray-300">Satisfied Buyers</div>
           </div>
         </div>
+        </div>
+      </div>
       </section>
 
       {/* Categories Section */}
-      <section className="py-16 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Shop by Category
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
-              Find exactly what you're looking for
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {categories.map(category => (
-              <CategoryCard
-                key={category.id}
-                category={category}
-                isSelected={selectedCategory === category.name}
-                onClick={() => handleCategorySelect(category.name)}
-              />
-            ))}
-          </div>
+      <section className="py-16 bg-white dark:bg-gray-900 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          Shop by Category
+        </h2>
+        <p className="text-lg text-gray-600 dark:text-gray-300">
+          Find exactly what you're looking for
+        </p>
         </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        {categories.map(category => (
+          <CategoryCard
+          key={category.id}
+          category={category}
+          isSelected={selectedCategory === category.name}
+          onClick={() => handleCategorySelect(category.name)}
+          />
+        ))}
+        </div>
+      </div>
       </section>
 
       {/* Featured Products Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-12">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                <TrendingUp className="inline-block mr-2 text-green-600" />
-                Featured Products
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300">
-                Hand-picked deals you don't want to miss
-              </p>
-            </div>
-            <Link
-              href="/products"
-              className="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
-            >
-              View All
-              <ArrowRight className="ml-1 h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+      <section className="py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between mb-12">
+        <div>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <TrendingUp className="inline-block mr-2 text-green-600 dark:text-green-400" />
+          Featured Products
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300">
+          Hand-picked deals you don't want to miss
+          </p>
         </div>
+        <Link
+          href="/products"
+          className="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+        >
+          View All
+          <ArrowRight className="ml-1 h-4 w-4" />
+        </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {featuredProducts.map(product => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+        </div>
+      </div>
       </section>
 
       {/* Latest Listings Section */}
-      <section className="py-16 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Latest Listings
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
-              {searchQuery && `Showing results for "${searchQuery}"`}
-              {selectedCategory && `Category: ${selectedCategory}`}
-              {!searchQuery && !selectedCategory && 'Fresh arrivals from our community'}
-            </p>
+      <section className="py-16 bg-white dark:bg-gray-900 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          Latest Listings
+        </h2>
+        <p className="text-lg text-gray-600 dark:text-gray-300">
+          {searchQuery && `Showing results for "${searchQuery}"`}
+          {selectedCategory && `Category: ${selectedCategory}`}
+          {!searchQuery && !selectedCategory && 'Fresh arrivals from our community'}
+        </p>
+        </div>
+
+        {filteredProducts.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-xl text-gray-500 dark:text-gray-400">
+          No products found matching your criteria.
+          </p>
+        </div>
+        ) : (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
           </div>
 
-          {filteredProducts.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-xl text-gray-500 dark:text-gray-400">
-                No products found matching your criteria.
-              </p>
-            </div>
-          ) : (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredProducts.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-
-              {/* Load More Button */}
-              {filteredProducts.length < products.length && !searchQuery && !selectedCategory && (
-                <div className="text-center mt-12">
-                  <button
-                    onClick={handleLoadMore}
-                    disabled={loadingMore}
-                    className="btn btn-primary px-8 py-3 text-lg"
-                  >
-                    {loadingMore ? (
-                      <>
-                        <div className="loading-spinner mr-2"></div>
-                        Loading...
-                      </>
-                    ) : (
-                      'Load More Products'
-                    )}
-                  </button>
-                </div>
-              )}
-            </>
+          {/* Load More Button */}
+          {filteredProducts.length < products.length && !searchQuery && !selectedCategory && (
+          <div className="text-center mt-12">
+            <button
+            onClick={handleLoadMore}
+            disabled={loadingMore}
+            className="btn btn-primary px-8 py-3 text-lg dark:bg-blue-700 dark:text-white dark:hover:bg-blue-800 transition-colors duration-300"
+            >
+            {loadingMore ? (
+              <>
+              <div className="loading-spinner mr-2"></div>
+              Loading...
+              </>
+            ) : (
+              'Load More Products'
+            )}
+            </button>
+          </div>
           )}
-        </div>
+        </>
+        )}
+      </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-primary">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Start Selling?
-          </h2>
-          <p className="text-xl text-white opacity-90 mb-8">
-            Join thousands of sellers and turn your unused items into cash today!
-          </p>
-          <div className="space-x-4">
-            <button className="btn bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-medium">
-              Start Selling
-            </button>
-            <button className="btn border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 text-lg font-medium">
-              Learn More
-            </button>
-          </div>
+      <section className="py-20 bg-gradient-primary dark:bg-gradient-to-br dark:from-blue-700 dark:to-indigo-900 transition-colors duration-300">
+      <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+        Ready to Start Selling?
+        </h2>
+        <p className="text-xl text-white opacity-90 mb-8">
+        Join thousands of sellers and turn your unused items into cash today!
+        </p>
+        <div className="space-x-4">
+        <button className="btn bg-white text-blue-600 hover:bg-gray-100 dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700 px-8 py-3 text-lg font-medium transition-colors duration-300">
+          Start Selling
+        </button>
+        <button className="btn border-2 border-white text-white hover:bg-white hover:text-blue-600 dark:border-blue-300 dark:text-blue-300 dark:hover:bg-blue-300 dark:hover:text-blue-900 px-8 py-3 text-lg font-medium transition-colors duration-300">
+          Learn More
+        </button>
         </div>
+      </div>
       </section>
     </div>
   );

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import Image from 'next/image';
 import Link from 'next/link';
 import { 
   Heart, 
@@ -128,13 +127,7 @@ export default function ProductDetailPage() {
           {/* Images */}
           <div className="space-y-4">
             <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
-              <Image
-                src={product.images[selectedImage] || product.images[0]}
-                alt={product.title}
-                width={600}
-                height={600}
-                className="w-full h-full object-cover"
-              />
+              
             </div>
 
             {product.images.length > 1 && (
@@ -149,13 +142,7 @@ export default function ProductDetailPage() {
                         : 'border-gray-200 dark:border-gray-700'
                     }`}
                   >
-                    <Image
-                      src={image}
-                      alt={`${product.title} ${index + 1}`}
-                      width={80}
-                      height={80}
-                      className="w-full h-full object-cover"
-                    />
+                    
                   </button>
                 ))}
               </div>
@@ -325,13 +312,7 @@ export default function ProductDetailPage() {
 
               <Link href={`/sellers/${seller.id}`} className="block hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg p-4 -m-4 transition-colors">
                 <div className="flex items-center space-x-4 mb-4">
-                  <Image
-                    src={seller.avatar}
-                    alt={seller.name}
-                    width={60}
-                    height={60}
-                    className="rounded-full"
-                  />
+                  
                   <div>
                     <h4 className="font-semibold text-gray-900 dark:text-white">{seller.name}</h4>
                     <div className="flex items-center space-x-1">

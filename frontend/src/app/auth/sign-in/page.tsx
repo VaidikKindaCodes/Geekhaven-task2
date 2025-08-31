@@ -1,6 +1,7 @@
+"use client"
 import React, {  useRef, useState } from "react";
 import { AuthContextType, useAuth } from "@/context/AuthProvider";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 
 export default function SignInSection({
