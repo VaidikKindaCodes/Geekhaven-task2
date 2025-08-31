@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { AppProvider } from '../app/context/AppContext';
+import { AppProvider } from '../context/AppContext';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 

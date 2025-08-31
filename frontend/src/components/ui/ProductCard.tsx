@@ -4,9 +4,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Heart, ShoppingCart, Star, MapPin, Eye } from 'lucide-react';
-import { Product } from '../../app/lib/types';
-import { useCart, useLikes, useApp } from '../../app/context/AppContext';
-import { formatCurrency, generateProductChecksum } from '../../app/lib/utils';
+import { Product } from '../../lib/types';
+import { useCart, useLikes, useApp } from '../../context/AppContext';
+import { formatCurrency, generateProductChecksum } from '../../lib/utils';
 
 interface ProductCardProps {
   product: Product;

@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Search, TrendingUp, Star, Heart, ShoppingCart, ArrowRight } from 'lucide-react';
-import { products, categories, ASSIGNMENT_SEED } from '../app/data/mockData';
-import { useCart, useLikes, useApp } from '../app/context/AppContext';
-import { formatCurrency, generateSeedColor, generateProductChecksum } from '../app/lib/utils';
+import { products, categories, ASSIGNMENT_SEED } from '../data/mockData';
+import { useCart, useLikes, useApp } from '../context/AppContext';
+import { formatCurrency, generateSeedColor, generateProductChecksum } from '../lib/utils';
 import { ProductCard } from '../components/ui/ProductCard';
 import { CategoryCard } from '../components/ui/Category';
 import { SearchBar } from '../components/ui/Search';

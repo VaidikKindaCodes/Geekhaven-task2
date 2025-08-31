@@ -16,7 +16,7 @@ import {
   LogOut,
   Bell
 } from 'lucide-react';
-import { useApp, useCart, useLikes } from '../../app/context/AppContext';
+import { useApp, useCart, useLikes } from '../../context/AppContext';
 
 
 export function Header() {

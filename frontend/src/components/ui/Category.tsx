@@ -1,6 +1,6 @@
 "use client";
 
-import { Category } from '../../app/lib/types';
+import { Category } from '../../lib/types';
 
 interface CategoryCardProps {
   category: Category;
