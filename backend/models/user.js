@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-import { setUser } from "../service/auth.js";
+import { setUser } from "../services/auth";
 import { createHmac, randomBytes } from "node:crypto";
 
 const userSchema = new Schema(
@@ -17,8 +17,15 @@ const userSchema = new Schema(
       type: String,
     },
     LikedItems: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "Items" },
+      { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     ],
+    Cart: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+    ],
+    role :{
+      type : String,
+      default : "user"
+    },
     password: {
       type: String,
       required: true,
