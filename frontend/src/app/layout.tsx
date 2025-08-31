@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { AppProvider } from '../context/AppContext';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
+import { AuthProvider } from '@/context/AuthProvider';
 
 
 export const metadata: Metadata = {
@@ -19,7 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body >
-        <AppProvider>
+        <AuthProvider>
+          <AppProvider>
           <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
             <Header />
             <main className="flex-1">
@@ -28,6 +30,7 @@ export default function RootLayout({
             <Footer />
           </div>
         </AppProvider>
+        </AuthProvider>    
       </body>
     </html>
   );
