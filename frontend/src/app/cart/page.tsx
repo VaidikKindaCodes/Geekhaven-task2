@@ -52,7 +52,6 @@ export default function CartPage() {
 
   useEffect(() => {
     fetchCartData();
-    // Listen for changes to localStorage from other tabs
     const onStorage = (e: StorageEvent) => {
       if (e.key === "cart") fetchCartData();
     };

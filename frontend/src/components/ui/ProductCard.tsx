@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Heart, ShoppingCart, Star, MapPin, Eye } from 'lucide-react';
 import { Product } from '../../lib/types';
 import { useCart, useLikes, useApp } from '../../context/AppContext';
@@ -49,11 +48,10 @@ export function ProductCard({ product }: ProductCardProps) {
     <div className="product-card group">
       <Link href={`/products/${product.id}`} onClick={handleProductView}>
         <div className="relative aspect-square overflow-hidden rounded-t-lg">
-          {/* {!imageError ? (
-            <Image
+          {!imageError ? (
+            <img
               src={product.images[0]}
               alt={product.title}
-              fill
               className={`object-cover transition-all duration-300 ${
                 isImageLoading ? 'blur-sm' : 'group-hover:scale-105'
               }`}
@@ -71,7 +69,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 <p className="text-sm">Image unavailable</p>
               </div>
             </div>
-          )} */}
+          )}
 
           {discountPercentage > 0 && (
             <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
