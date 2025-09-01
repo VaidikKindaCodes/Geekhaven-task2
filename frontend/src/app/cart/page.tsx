@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Trash2 } from "lucide-react";
 import { AuthContextType, useAuth } from "@/context/AuthProvider";
 
@@ -26,36 +25,39 @@ interface Product {
 
 export default function CartPage() {
   const { user } = useAuth() as AuthContextType;
-  const backendurl = process.env.NEXT_PUBLIC_BACKEND_URL?.toString();
   const [cartData, setCartData] = useState<Product[]>([]);
 
-  const fetchCartData = async () => {
+  const fetchCartData = () => {
     if (!user?._id) {
       setCartData([]);
       return;
     }
     try {
-      const res = await fetch(`${backendurl}/api/getcart?userId=${user._id}`);
-      const data = await res.json();
-      setCartData(data);
-    } catch (error) {
+      const cart = localStorage.getItem("cart");
+      if (cart) {
+        setCartData(JSON.parse(cart));
+      } else {
+        setCartData([]);
+      }
+    } catch {
       setCartData([]);
     }
   };
 
-  const handleRemove = async (productId: number) => {
-    try {
-      await fetch(`${backendurl}/api/liked/remove`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user?._id, productId }),
-      });
-      fetchCartData();
-    } catch (error) {}
+  const handleRemove = (productId: number) => {
+    const updatedCart = cartData.filter((item) => item.id !== productId);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    setCartData(updatedCart);
   };
 
   useEffect(() => {
     fetchCartData();
+    // Listen for changes to localStorage from other tabs
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "cart") fetchCartData();
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
   }, [user?._id]);
 
   if (!user) {
@@ -91,9 +93,9 @@ export default function CartPage() {
           >
             <div className="relative w-full h-40">
               <img
-                src={`${item.images}`}
+                src={item.images[0]}
                 alt={item.title}
-                className="object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
             <div className="p-4 flex-1 flex flex-col">
