@@ -6,7 +6,7 @@ interface User {
   _id: string;
   username: string;
   email: string;
-  LikedItems: any[]; // adjust as per schema
+  LikedItems: any[]; 
 }
 
 export interface AuthContextType {
@@ -25,18 +25,17 @@ interface AuthProviderProps {
 }
 
 function getCookie(name: string): string | null {
-  if (typeof document === "undefined") return null; // ✅ safe check
+  if (typeof document === "undefined") return null; 
   const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
   return match ? decodeURIComponent(match[2]) : null;
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [token, setToken] = useState<string | null>(null); // ✅ start null
+  const [token, setToken] = useState<string | null>(null); 
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // ✅ runs only in browser
     const cookieToken = getCookie("token");
     const storedUser = getCookie("user");
     if (cookieToken) setToken(cookieToken);

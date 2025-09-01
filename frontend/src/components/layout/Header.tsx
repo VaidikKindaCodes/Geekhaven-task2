@@ -9,32 +9,24 @@ import {
   Heart, 
   Menu, 
   X, 
-  Sun, 
-  Moon, 
   User, 
   Settings,
-  LogOut,
-  Bell
+  LogOut
 } from 'lucide-react';
 import { useApp, useCart, useLikes } from '../../context/AppContext';
-import ThemeToggle from '../ui/Darkmode';
 import { AuthContextType, useAuth } from '@/context/AuthProvider';
 
-
 export function Header() {
-  const {token , user ,logout} = useAuth() as AuthContextType;
+  const { token, user, logout, loading } = useAuth() as AuthContextType;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const searchRef = useRef<HTMLInputElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
-
   const router = useRouter();
   const pathname = usePathname();
   const { darkMode, dispatch } = useApp();
   const { getCartItemCount } = useCart();
   const { likeCount } = useLikes();
-
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -62,24 +54,13 @@ export function Header() {
     }
   };
 
-  const toggleDarkMode = () => {
-    dispatch({ type: 'TOGGLE_DARK_MODE' });
-    dispatch({
-      type: 'ADD_USER_ACTION',
-      payload: {
-        id: Date.now().toString(),
-        action: 'Toggled dark mode',
-        timestamp: new Date(),
-        details: !darkMode ? 'Enabled' : 'Disabled',
-      },
-    });
-  };
-
   const navLinks = [
     { name: 'Home', href: '/', active: pathname === '/' },
     { name: 'Products', href: '/products', active: pathname === '/products' },
     { name: 'Sellers', href: '/sellers', active: pathname.startsWith('/sellers') },
   ];
+
+  if (loading) return null;
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
@@ -87,12 +68,12 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              
               <span className="text-xl font-bold text-gray-900 dark:text-white">
                 VaidikShop
               </span>
             </Link>
           </div>
+
           <nav className="hidden md:flex space-x-8">
             {navLinks.map((link) => (
               <Link
@@ -108,11 +89,11 @@ export function Header() {
               </Link>
             ))}
           </nav>
+
           <div className="hidden lg:flex flex-1 max-w-lg mx-8">
             <form onSubmit={handleSearch} className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
-                ref={searchRef}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -121,6 +102,7 @@ export function Header() {
               />
             </form>
           </div>
+
           <div className="flex items-center space-x-4">
             <Link
               href="/dashboard?tab=likes"
@@ -133,6 +115,7 @@ export function Header() {
                 </span>
               )}
             </Link>
+
             <Link
               href="/cart"
               className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors relative"
@@ -144,6 +127,7 @@ export function Header() {
                 </span>
               )}
             </Link>
+
             <div className="relative" ref={profileRef}>
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
@@ -153,67 +137,68 @@ export function Header() {
                 <span className="hidden sm:block text-sm font-medium">Account</span>
               </button>
 
-{isProfileOpen && (
-              <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
-                {token ? (
-                  <>
-                    <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">
-                        {user?.username || "Demo User"}
-                      </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {user?.email || "demo@resellhub.com"}
-                      </p>
-                    </div>
+              {isProfileOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+                  {token ? (
+                    <>
+                      <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                          {user?.username || "Demo User"}
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {user?.email || "demo@resellhub.com"}
+                        </p>
+                      </div>
 
-                    <Link
-                      href="/dashboard"
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                      <User className="h-4 w-4 mr-2" /> Dashboard
-                    </Link>
+                      <Link
+                        href="/dashboard"
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        <User className="h-4 w-4 mr-2" /> Dashboard
+                      </Link>
 
-                    <Link
-                      href="/dashboard?tab=settings"
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                      <Settings className="h-4 w-4 mr-2" /> Settings
-                    </Link>
+                      <Link
+                        href="/dashboard?tab=settings"
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        <Settings className="h-4 w-4 mr-2" /> Settings
+                      </Link>
 
-                    <button
-                      onClick={() => {
-                        logout();
-                        setIsProfileOpen(false);
-                        router.push("/");
-                      }}
-                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                      <LogOut className="h-4 w-4 mr-2" /> Sign Out
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">
-                        Guest User
-                      </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Please sign in to continue
-                      </p>
-                    </div>
+                      <button
+                        onClick={() => {
+                          logout();
+                          setIsProfileOpen(false);
+                          router.push("/");
+                        }}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        <LogOut className="h-4 w-4 mr-2" /> Sign Out
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                          Guest User
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          Please sign in to continue
+                        </p>
+                      </div>
 
-                    <Link
-                      href="/auth/sign-in"
-                      onClick={() => setIsProfileOpen(false)}
-                      className="flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                      <User className="h-4 w-4 mr-2" /> Sign In
-                    </Link>
-                  </>
-                )}
-              </div>
-            )}
+                      <Link
+                        href="/auth/sign-in"
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        <User className="h-4 w-4 mr-2" /> Sign In
+                      </Link>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
+
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
@@ -222,6 +207,7 @@ export function Header() {
             </button>
           </div>
         </div>
+
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-200 dark:border-gray-700 pt-4 pb-4">
             <form onSubmit={handleSearch} className="relative mb-4">
