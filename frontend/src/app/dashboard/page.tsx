@@ -29,20 +29,24 @@ interface Product {
 
 export default function DashboardPage() {
   const { user } = useAuth() as AuthContextType;
-  const backendurl = process.env.NEXT_PUBLIC_BACKEND_URL?.toString();
   const [likedData, setLikedData] = useState<Product[]>([]);
   const [activeTab, setActiveTab] = useState("overview");
   const { userActions, dispatch } = useApp();
   const { likedProducts } = useLikes();
 
-  const fetchLikedData = async () => {
-    const res = await fetch(`${backendurl}/api/getliked?userId=${user?._id}`);
-    const data = await res.json();
-    setLikedData(data);
-  };
-
   useEffect(() => {
-    fetchLikedData();
+    // Get liked products from localStorage
+    const stored = typeof window !== "undefined" ? localStorage.getItem("likedProducts") : null;
+    if (stored) {
+      try {
+        const parsed: Product[] = JSON.parse(stored);
+        setLikedData(parsed);
+      } catch {
+        setLikedData([]);
+      }
+    } else {
+      setLikedData([]);
+    }
   }, []);
 
   useEffect(() => {
@@ -106,9 +110,9 @@ export default function DashboardPage() {
                   >
                     <tab.icon className="h-4 w-4" />
                     <span>{tab.label}</span>
-                    {tab.id === "likes" && likedProducts.length > 0 && (
+                    {tab.id === "likes" && likedData.length > 0 && (
                       <span className="ml-auto bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400 text-xs px-2 py-1 rounded-full">
-                        {likedProducts.length}
+                        {likedData.length}
                       </span>
                     )}
                   </button>
