@@ -8,13 +8,12 @@ import { DBConnect } from "./dbConnect.js";
 import cookieParser from "cookie-parser";
 const port = process.env.PORT;
 const databaseUrl = process.env.DB_URI.toString();
-const frontendUrl = process.env.FRONTEND_URL.toString();
 
 const app = express();
 DBConnect(databaseUrl);
 
 app.use(cors({
-  origin: frontendUrl, 
+  origin: "https://geekhaven-task2.vercel.app", 
   credentials: true,           
 }));
 app.use(express.json());
