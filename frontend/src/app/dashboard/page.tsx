@@ -31,7 +31,7 @@ export default function DashboardPage() {
   const { user } = useAuth() as AuthContextType;
   const backendurl = process.env.NEXT_PUBLIC_BACKEND_URL?.toString();
   const [likedData, setLikedData] = useState<Product[]>([]);
-  const [activeTab, setActiveTab] = useState("overview"); // 👈 local state
+  const [activeTab, setActiveTab] = useState("overview");
   const { userActions, dispatch } = useApp();
   const { likedProducts } = useLikes();
 

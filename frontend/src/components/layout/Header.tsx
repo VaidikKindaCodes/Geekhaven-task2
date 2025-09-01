@@ -16,7 +16,7 @@ import { useApp, useCart, useLikes } from '../../context/AppContext';
 import { AuthContextType, useAuth } from '@/context/AuthProvider';
 
 export function Header() {
-  const { token, user, logout, loading } = useAuth() as AuthContextType;
+  const { user, logout, loading } = useAuth() as AuthContextType;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -132,7 +132,7 @@ export function Header() {
               </button>
               {isProfileOpen && (
                 <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
-                  {token && user ? (
+                  { user ? (
                     <>
                       <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
                         <p className="text-sm font-medium text-gray-900 dark:text-white">
