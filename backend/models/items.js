@@ -40,10 +40,10 @@ const ProductSchema = new mongoose.Schema({
 });
 
 const totatDataSchema = new mongoose.Schema({
-    totalProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
+    totalProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product2' }]
 });
 
-export const Category = mongoose.model('Category', CategorySchema);
-export const Seller = mongoose.model('Seller', SellerSchema);
-export const Product = mongoose.model('Product', ProductSchema);
-export const TotalProducts = mongoose.model('TotalData' , totatDataSchema);
+export const Category = mongoose.model('Category2', CategorySchema);
+export const Seller = mongoose.model('Seller2', SellerSchema);
+export const Product = mongoose.model('Product2', ProductSchema);
+export const TotalProducts = mongoose.model('TotalData2' , totatDataSchema);

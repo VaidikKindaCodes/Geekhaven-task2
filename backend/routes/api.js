@@ -54,7 +54,7 @@ router.post("/products/remove", async (req, res) => {
 
 router.get("/products/populated", async (req, res) => {
     try {
-        const doc = await TotalProducts.findOne().populate("totalProducts");
+        const doc = await TotalProducts.findOne().populate("TotalData2");
         if (!doc) return res.json({ products: [] });
         res.json({ products: doc.totalProducts });
     } catch (err) {
@@ -69,9 +69,9 @@ router.post("/cart/add", async (req, res) => {
             userId,
             { $addToSet: { cart: productId } },
             { new: true }
-        ).populate("cart");
+        ).populate("Cart");
         if (!user) return res.status(404).json({ message: "User not found" });
-        res.json({ message: "Product added to cart", cart: user.cart });
+        res.json({ message: "Product added to cart", cart: user.Cart });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -84,9 +84,9 @@ router.post("/cart/remove", async (req, res) => {
             userId,
             { $pull: { cart: productId } },
             { new: true }
-        ).populate("cart");
+        ).populate("Cart");
         if (!user) return res.status(404).json({ message: "User not found" });
-        res.json({ message: "Product removed from cart", cart: user.cart });
+        res.json({ message: "Product removed from cart", cart: user.Cart });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -99,7 +99,7 @@ router.post("/liked/add", async (req, res) => {
             userId,
             { $addToSet: { liked: productId } },
             { new: true }
-        ).populate("liked");
+        ).populate("Liked");
         if (!user) return res.status(404).json({ message: "User not found" });
         res.json({ message: "Product added to liked", liked: user.liked });
     } catch (err) {
@@ -114,7 +114,7 @@ router.post("/liked/remove", async (req, res) => {
             userId,
             { $pull: { liked: productId } },
             { new: true }
-        ).populate("liked");
+        ).populate("Liked");
         if (!user) return res.status(404).json({ message: "User not found" });
         res.json({ message: "Product removed from liked", liked: user.liked });
     } catch (err) {
@@ -125,7 +125,7 @@ router.post("/liked/remove", async (req, res) => {
 router.get("/getliked" , async (req,res) => {
     try {
     const { userId } = req.query;
-    const user = await User.findById(userId).populate("Product");
+    const user = await User.findById(userId).populate("Liked");
     const LikedItems = user.LikedItems;
     return res.json(LikedItems);
   } catch (error) {}
@@ -135,7 +135,7 @@ router.get("/getliked" , async (req,res) => {
 router.get("/getcart" , async (req,res) => {
     try {
     const { userId } = req.query;
-    const user = await User.findById(userId).populate("Product");
+    const user = await User.findById(userId).populate("Cart");
     const Cart = user.Cart;
     return res.json(Cart);
   } catch (error) {}

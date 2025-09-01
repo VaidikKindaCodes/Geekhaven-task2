@@ -17,10 +17,10 @@ const userSchema = new Schema(
       type: String,
     },
     LikedItems: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+      { type: mongoose.Schema.Types.ObjectId, ref: "Product2" },
     ],
     Cart: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+      { type: mongoose.Schema.Types.ObjectId, ref: "Product2" },
     ],
     role :{
       type : String,
@@ -72,6 +72,6 @@ userSchema.statics.matchPassword = async function (email, password) {
   return { token, user };
 };
 
-const User = model("user", userSchema);
+const User = model("usertask2", userSchema);
 
 export default User;
