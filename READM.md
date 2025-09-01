@@ -79,4 +79,7 @@ POST /api/seed
 
 /sellers → Sellers page
 
+Currently dashboard shows mock data as seed will be given during the time of VIVA however backend logic is flawlessly written , after successful seeding ,just have to fetch the total products which is an array of products and have to display on frontend.
+
+For posting a product multer has to be configured either to hold local images or image url needs to be given
 
